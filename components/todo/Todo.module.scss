@@ -27,5 +27,9 @@
 }
 
 .completed {
-  filter: opacity(25%);
+  filter: opacity(55%);
+
+  & .text {
+    text-decoration: line-through;
+  }
 }
