@@ -8,15 +8,28 @@ import {
 } from "next";
 
 import { useState } from "react";
-import AppModal from "../components/app-modal/AppModal";
+import AppModal, { ActionType } from "../components/app-modal/AppModal";
 
 export default function Home({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [open, setOpen] = useState(false);
+  const [appModalActive, setAppModalActive] = useState(false);
+  const [todos, setTodos] = useState(data);
 
-  const completedTodos = data.filter((todo) => todo.completed === true);
-  const pendingTodos = data.filter((todo) => todo.completed === false);
+  const completedTodos = todos.filter((todo) => todo.completed === true);
+  const pendingTodos = todos.filter((todo) => todo.completed === false);
+
+  function handleModalSubmit(action: ActionType, text: string) {
+    if (action === ActionType.CREATE) {
+      let newTodo = {
+        id: todos.length + 1,
+        userId: 1,
+        title: text,
+        completed: false,
+      };
+      setTodos(todos.concat(newTodo));
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -29,7 +42,7 @@ export default function Home({
             </p>
           </div>
           <div className={styles.addTodoBtn}>
-            <AppButton onClick={() => setOpen(true)}>
+            <AppButton onClick={() => setAppModalActive(true)}>
               <div className={styles.btnTextIcon}>
                 <img
                   className={styles.addTodoIcon}
@@ -42,7 +55,14 @@ export default function Home({
           </div>
         </header>
         <div className={styles.appModal}>
-          {open && <AppModal update={false} setIsOpen={setOpen} text="hello" />}
+          {appModalActive && (
+            <AppModal
+              update={false}
+              setIsOpen={setAppModalActive}
+              handleModalSubmit={handleModalSubmit}
+              text="hello"
+            />
+          )}
         </div>
 
         <section className={styles.pendingTodosSection}>
