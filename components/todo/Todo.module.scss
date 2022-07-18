@@ -37,6 +37,7 @@
 
 .completed {
   filter: opacity(55%);
+  position: static;
 
   & .text {
     text-decoration: line-through;
