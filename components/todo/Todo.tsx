@@ -1,3 +1,5 @@
+import { useState } from "react";
+import TodoContextMenu from "../todo-context-menu/TodoContextMenu";
 import styles from "./Todo.module.scss";
 
 type TodoProps = {
@@ -7,6 +9,8 @@ type TodoProps = {
 };
 
 export default function Todo({ text, completed, appModalActive }: TodoProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div
       className={`${styles.todo} 
@@ -30,13 +34,13 @@ export default function Todo({ text, completed, appModalActive }: TodoProps) {
         )}
         <p className={styles.text}>{text}</p>
       </div>
-      {!completed && (
-        <img
-          className={styles.toggleMenuIcon}
-          src="toggle-menu-icon.svg"
-          alt="toggle menu icon"
-        />
-      )}
+      <div onClick={() => setMenuOpen(true)} className={styles.toggleMenuIcon}>
+        {!completed && (
+          <img src="toggle-menu-icon.svg" alt="toggle menu icon" />
+        )}
+      </div>
+
+      {menuOpen && <TodoContextMenu setMenuOpen={setMenuOpen} />}
     </div>
   );
 }
