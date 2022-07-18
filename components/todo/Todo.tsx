@@ -14,9 +14,7 @@ export default function Todo({ text, completed, appModalActive }: TodoProps) {
   return (
     <div
       className={`${styles.todo} 
-            ${completed && styles.completed}
-            ${completed && appModalActive && styles.appModalActive}
-            `}
+            ${completed && styles.completed} `}
     >
       <div className={styles.main}>
         {!completed ? (

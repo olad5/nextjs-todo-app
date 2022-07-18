@@ -1,12 +1,22 @@
-import type { NextPage } from "next";
 import AppButton from "../components/app-button/AppButton";
 import styles from "../styles/Home.module.scss";
 import Todo from "../components/todo/Todo";
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  InferGetServerSidePropsType,
+} from "next";
+
 import { useState } from "react";
 import AppModal from "../components/app-modal/AppModal";
 
-const Home: NextPage = () => {
+export default function Home({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [open, setOpen] = useState(false);
+
+  const completedTodos = data.filter((todo) => todo.completed === true);
+  const pendingTodos = data.filter((todo) => todo.completed === false);
 
   return (
     <div className={styles.container}>
@@ -31,34 +41,68 @@ const Home: NextPage = () => {
             </AppButton>
           </div>
         </header>
-        {open && <AppModal update={false} setIsOpen={setOpen} text="hello " />}
+        <div className={styles.appModal}>
+          {open && <AppModal update={false} setIsOpen={setOpen} text="hello" />}
+        </div>
 
         <section className={styles.pendingTodosSection}>
           <h3 className={styles.pendingTitle}>PENDING</h3>
           <div className={styles.pendingTodos}>
-            <Todo text="Walk the dog" completed={false} />
-            <Todo text="Wash the car" completed={false} />
+            {pendingTodos.map((todo) => (
+              <div key={todo.id}>
+                <Todo text={todo.title} completed={todo.completed} />
+              </div>
+            ))}
           </div>
         </section>
 
         <section className={styles.completedTodosSection}>
           <h3 className={styles.pendingTitle}>COMPLETED</h3>
           <div className={styles.pendingTodos}>
-            <Todo
-              text="Done the dishes"
-              completed={true}
-              appModalActive={open}
-            />
-            <Todo
-              text="clean the floor"
-              completed={true}
-              appModalActive={open}
-            />
+            {completedTodos.map((todo) => (
+              <div key={todo.id}>
+                <Todo text={todo.title} completed={todo.completed} />
+              </div>
+            ))}
           </div>
         </section>
       </main>
     </div>
   );
+}
+
+type APIResponse = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}[];
+
+type PageProps = {
+  data: APIResponse;
 };
 
-export default Home;
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<PageProps>> {
+  const apiUrl = "https://jsonplaceholder.typicode.com/users/1/posts";
+  const response = await fetch(apiUrl, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const data: APIResponse = await response.json();
+
+  // this attaches a random completed property value to each post
+  data.map((post) => {
+    post["completed"] = (function () {
+      return Math.random() < 0.5;
+    })();
+  });
+
+  return {
+    props: {
+      data: data,
+    },
+  };
+}
