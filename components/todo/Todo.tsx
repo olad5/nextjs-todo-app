@@ -2,14 +2,16 @@ import styles from "./Todo.module.scss";
 
 type TodoProps = {
   completed: boolean;
+  appModalActive?: boolean;
   text: string;
 };
 
-export default function Todo({ text, completed }: TodoProps) {
+export default function Todo({ text, completed, appModalActive }: TodoProps) {
   return (
     <div
       className={`${styles.todo} 
             ${completed && styles.completed}
+            ${completed && appModalActive && styles.appModalActive}
             `}
     >
       <div className={styles.main}>

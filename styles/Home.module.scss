@@ -37,6 +37,12 @@
   height: 100%;
   font-size: 1.2rem;
 
+  .btnTextIcon {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   .addTodoIcon {
     width: 1.5rem;
     height: 1rem;

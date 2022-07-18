@@ -1,0 +1,57 @@
+.darkBg {
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal {
+  width: 65rem;
+  height: max-content;
+  background-color: white;
+  z-index: 20;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem 2rem;
+
+  & .modelHeader {
+    color: black;
+
+    & .heading {
+      color: black;
+    }
+  }
+
+  & .inputField {
+    width: 100%;
+
+    & .label {
+      margin-bottom: 1rem;
+    }
+
+    & .input {
+      width: 100%;
+      border: 1px solid var(--primary-black);
+      height: 4rem;
+      padding: 1rem;
+    }
+  }
+  & .appButton {
+    text-align: center;
+    height: 4rem;
+    font-size: 1.3rem;
+  }
+}
