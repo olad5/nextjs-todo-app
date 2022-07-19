@@ -8,7 +8,11 @@ type TodoProps = {
   appModalActive?: boolean;
   text: string;
   todoId: number;
-  handleContextMenuAction: (action: ActionType, text: string) => void;
+  handleContextMenuAction: (
+    action: ActionType,
+    text: string,
+    todoId: number
+  ) => void;
   setCurrentTodo: Dispatch<SetStateAction<number>>;
   currentTodo?: number;
 };
@@ -27,7 +31,7 @@ export default function Todo({
 
   function handleContextMenuClick(action: ActionType) {
     setMenuOpen(false);
-    handleContextMenuAction(action, text);
+    handleContextMenuAction(action, text, todoId);
   }
 
   function handleMenuIconClick(e: React.MouseEvent<HTMLDivElement>) {

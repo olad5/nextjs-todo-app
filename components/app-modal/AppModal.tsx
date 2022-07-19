@@ -60,7 +60,6 @@ export default function AppModal({
         },
       });
 
-      console.log(response);
       const data: Todo = await response.json();
       handleUpdateTodoModalSubmit(todoId, data.title);
       setIsOpen(false);

@@ -45,10 +45,20 @@ export default function Home({
       })
     );
   }
-  function handleContextMenuAction(action: ActionType, text: string) {
+  function handleContextMenuAction(
+    action: ActionType,
+    text: string,
+    todoId: number
+  ) {
     if (action === ActionType.UPDATE) {
       setTodoText(text);
       setAppModalActive(true);
+    } else {
+      fetch(`https://jsonplaceholder.typicode.com/posts/${todoId}`, {
+        method: "DELETE",
+      });
+
+      setTodos(todos.filter((todo) => todo.id !== todoId));
     }
   }
 
