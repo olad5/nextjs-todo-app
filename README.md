@@ -1,4 +1,19 @@
+## Simple TODO API
+
+A TODO App built with next, sass and typescript
+
+### Technologies used
+* Next 
+* Sass
+* TypeScript
+
+
+### API used
+* [Jsonplaceholder API](https://jsonplaceholder.typicode.com/) 
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
 
 ## Getting Started
 
