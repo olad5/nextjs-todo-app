@@ -69,7 +69,6 @@ export default function Home({
   }
 
   function toggleCompleted(todoId: number) {
-    console.log("about to run some stuff");
     if (todos.find((todo) => todo.id === todoId)?.completed === false) {
       setTodos(
         todos.map((todo) => {

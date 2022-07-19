@@ -21,7 +21,6 @@ type TodoProps = {
 export default function Todo({
   text,
   completed,
-
   handleContextMenuAction,
   todoId,
   setCurrentTodo,
@@ -29,7 +28,6 @@ export default function Todo({
   currentTodo,
 }: TodoProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [currentTodoOpen, setCurrentTodoOpen] = useState(false);
 
   function handleContextMenuClick(action: ActionType) {
     setMenuOpen(false);
@@ -42,7 +40,6 @@ export default function Todo({
   }
 
   function handleCompletedIconClick(e: React.MouseEvent<HTMLImageElement>) {
-    console.log("running ooooo");
     toggleCompleted(todoId);
   }
 

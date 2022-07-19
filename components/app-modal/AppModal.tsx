@@ -29,8 +29,10 @@ export default function AppModal({
   const [inputText, setInputText] = useState("");
   const [inputFieldEmpty, setInputFieldEmpty] = useState(false);
 
+  const prevText = text;
+
   async function handleClick(action: ActionType, text: string) {
-    if (!text) {
+    if (!text && text.length < 0) {
       setInputFieldEmpty(true);
       return;
     }
@@ -59,7 +61,7 @@ export default function AppModal({
       const response = await fetch(apiUrl, {
         method: "PATCH",
         body: JSON.stringify({
-          title: text,
+          title: text || prevText,
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
