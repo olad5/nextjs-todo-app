@@ -1,19 +1,35 @@
+@use "./mixins" as global;
+
 .container {
   max-width: 60%;
   margin: 0 auto;
   margin-top: 4rem;
+
+  @include global.tablet() {
+    max-width: 90%;
+  }
 }
 
 .main {
   display: grid;
   grid-template-rows: max-content auto auto;
-  gap: 8rem;
+  gap: 3rem;
+
+  @include global.tablet() {
+    max-width: 100%;
+    align-items: center;
+  }
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   height: 4.2rem;
+
+  @include global.tablet() {
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 .title {
@@ -29,6 +45,10 @@
     .author {
       text-decoration: underline;
     }
+  }
+
+  @include global.tablet() {
+    font-size: 0.9rem;
   }
 }
 
@@ -53,6 +73,11 @@
     width: 1.5rem;
     height: 1rem;
   }
+
+  @include global.tablet() {
+    font-size: 0.8rem;
+    width: 10rem;
+  }
 }
 
 .pendingTitle {
@@ -65,5 +90,12 @@
   & .pendingTodos {
     display: flex;
     flex-direction: column;
+  }
+}
+
+.pendingTodosSection,
+.completedTodosSection {
+  @include global.tablet() {
+    max-width: 100%;
   }
 }

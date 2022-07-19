@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as global;
+
 .darkBg {
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
@@ -14,6 +16,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @include global.tablet() {
+    width: 90%;
+  }
 }
 
 .modal {
@@ -52,5 +58,9 @@
     text-align: center;
     height: 4rem;
     font-size: 1.3rem;
+  }
+
+  @include global.tablet() {
+    width: 100%;
   }
 }
