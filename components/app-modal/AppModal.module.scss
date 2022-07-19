@@ -32,11 +32,23 @@
   gap: 2rem;
   padding: 2rem 2rem;
 
-  & .modelHeader {
+  & .modalHeader {
     color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     & .heading {
       color: black;
+    }
+
+    & .closeModalIcon {
+      font-size: 3rem;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.2);
+      }
     }
   }
 

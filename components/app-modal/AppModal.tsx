@@ -87,6 +87,12 @@ export default function AppModal({
             <h2 className={styles.heading}>{`${
               !update ? "Add a new " : "Edit"
             } Todo`}</h2>
+            <p
+              className={styles.closeModalIcon}
+              onClick={() => setIsOpen(false)}
+            >
+              X
+            </p>
           </div>
 
           <div className={styles.inputField}>
