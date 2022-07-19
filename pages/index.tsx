@@ -104,7 +104,10 @@ export default function Home({
           <div className={styles.title}>
             <h1 className={styles.mainTitle}>Todo App</h1>
             <p className={styles.secondaryText}>
-              by <span className={styles.author}>Francis Shonubi</span>
+              by{" "}
+              <span className={styles.author}>
+                <a href="https://github.com/olad5">Francis Shonubi</a>
+              </span>
             </p>
           </div>
           <div className={styles.addTodoBtn}>

@@ -29,6 +29,8 @@ export default function AppModal({
   const [inputText, setInputText] = useState("");
 
   async function handleClick(action: ActionType, text: string) {
+    if (!text) return;
+
     if (action === ActionType.CREATE) {
       const apiUrl = "https://jsonplaceholder.typicode.com/posts";
       const response = await fetch(apiUrl, {
