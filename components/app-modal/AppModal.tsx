@@ -32,7 +32,7 @@ export default function AppModal({
   const prevText = text;
 
   async function handleClick(action: ActionType, text: string) {
-    if (!text && text.length < 0) {
+    if (!text && text.length < 1) {
       setInputFieldEmpty(true);
       return;
     }
