@@ -42,6 +42,7 @@
 
   & .inputField {
     width: 100%;
+    position: relative;
 
     & .label {
       margin-bottom: 1rem;
@@ -52,6 +53,20 @@
       border: 1px solid var(--primary-black);
       height: 4rem;
       padding: 1rem;
+      margin-bottom: 0.7rem;
+    }
+
+    & .errorMessageContainer {
+      display: flex;
+      justify-content: center;
+    }
+
+    & .inputErrorMessage {
+      color: #c24c3d;
+      text-align: center;
+      font-size: 1.2rem;
+      position: absolute;
+      top: 6.8rem;
     }
   }
   & .appButton {

@@ -27,9 +27,13 @@ export default function AppModal({
   handleUpdateTodoModalSubmit,
 }: AppModalProps) {
   const [inputText, setInputText] = useState("");
+  const [inputFieldEmpty, setInputFieldEmpty] = useState(false);
 
   async function handleClick(action: ActionType, text: string) {
-    if (!text) return;
+    if (!text) {
+      setInputFieldEmpty(true);
+      return;
+    }
 
     if (action === ActionType.CREATE) {
       const apiUrl = "https://jsonplaceholder.typicode.com/posts";
@@ -70,6 +74,7 @@ export default function AppModal({
   }
 
   function handleTextChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputFieldEmpty(false);
     setInputText(e.currentTarget.value);
   }
 
@@ -93,7 +98,15 @@ export default function AppModal({
               defaultValue={`${update ? text : ""}`}
               onChange={handleTextChange}
             />
+            {inputFieldEmpty && (
+              <div className={styles.errorMessageContainer}>
+                <p className={styles.inputErrorMessage}>
+                  Input cannot be left blank
+                </p>
+              </div>
+            )}
           </div>
+
           <div className={styles.appButton}>
             <AppButton
               onClick={() =>
