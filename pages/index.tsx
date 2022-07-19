@@ -9,6 +9,7 @@ import {
 
 import { useState } from "react";
 import AppModal, { ActionType } from "../components/app-modal/AppModal";
+import EntryScreen from "../components/entry-screen/EntryScreen";
 
 export default function Home({
   data,
@@ -110,18 +111,20 @@ export default function Home({
               </span>
             </p>
           </div>
-          <div className={styles.addTodoBtn}>
-            <AppButton onClick={(e) => handleAddTodoClick(e)}>
-              <div className={styles.btnTextIcon}>
-                <img
-                  className={styles.addTodoIcon}
-                  src="plus-sign-white-icon.svg"
-                  alt=" add todo icon"
-                />
-                <span>Add Todo</span>
-              </div>
-            </AppButton>
-          </div>
+          {todos.length > 0 && (
+            <div className={styles.addTodoBtn}>
+              <AppButton onClick={(e) => handleAddTodoClick(e)}>
+                <div className={styles.btnTextIcon}>
+                  <img
+                    className={styles.addTodoIcon}
+                    src="plus-sign-white-icon.svg"
+                    alt=" add todo icon"
+                  />
+                  <span>Add Todo</span>
+                </div>
+              </AppButton>
+            </div>
+          )}
         </header>
         <div className={styles.appModal}>
           {appModalActive && (
@@ -136,43 +139,49 @@ export default function Home({
           )}
         </div>
 
-        <section className={styles.pendingTodosSection}>
-          <h3 className={styles.pendingTitle}>PENDING</h3>
-          <div className={styles.pendingTodos}>
-            {pendingTodos.map((todo) => (
-              <div key={todo.id}>
-                <Todo
-                  text={todo.title}
-                  completed={todo.completed}
-                  handleContextMenuAction={handleContextMenuAction}
-                  todoId={todo.id}
-                  setCurrentTodo={setCurrentTodo}
-                  currentTodo={currentTodo}
-                  toggleCompleted={toggleCompleted}
-                />
+        {todos.length > 0 ? (
+          <div>
+            <section className={styles.pendingTodosSection}>
+              <h3 className={styles.pendingTitle}>PENDING</h3>
+              <div className={styles.pendingTodos}>
+                {pendingTodos.map((todo) => (
+                  <div key={todo.id}>
+                    <Todo
+                      text={todo.title}
+                      completed={todo.completed}
+                      handleContextMenuAction={handleContextMenuAction}
+                      todoId={todo.id}
+                      setCurrentTodo={setCurrentTodo}
+                      currentTodo={currentTodo}
+                      toggleCompleted={toggleCompleted}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
 
-        <section className={styles.completedTodosSection}>
-          <h3 className={styles.pendingTitle}>COMPLETED</h3>
-          <div className={styles.pendingTodos}>
-            {completedTodos.map((todo) => (
-              <div key={todo.id}>
-                <Todo
-                  text={todo.title}
-                  completed={todo.completed}
-                  handleContextMenuAction={handleContextMenuAction}
-                  todoId={todo.id}
-                  setCurrentTodo={setCurrentTodo}
-                  currentTodo={currentTodo}
-                  toggleCompleted={toggleCompleted}
-                />
+            <section className={styles.completedTodosSection}>
+              <h3 className={styles.pendingTitle}>COMPLETED</h3>
+              <div className={styles.pendingTodos}>
+                {completedTodos.map((todo) => (
+                  <div key={todo.id}>
+                    <Todo
+                      text={todo.title}
+                      completed={todo.completed}
+                      handleContextMenuAction={handleContextMenuAction}
+                      todoId={todo.id}
+                      setCurrentTodo={setCurrentTodo}
+                      currentTodo={currentTodo}
+                      toggleCompleted={toggleCompleted}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
+            </section>
           </div>
-        </section>
+        ) : (
+          <EntryScreen setModalActive={setAppModalActive} />
+        )}
       </main>
     </div>
   );
