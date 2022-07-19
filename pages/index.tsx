@@ -98,6 +98,11 @@ export default function Home({
     );
   }
 
+  function handleEntryScreen(e: React.MouseEvent<HTMLImageElement>) {
+    setTodoText("");
+    setAppModalActive(true);
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -180,7 +185,7 @@ export default function Home({
             </section>
           </div>
         ) : (
-          <EntryScreen setModalActive={setAppModalActive} />
+          <EntryScreen setModalActive={handleEntryScreen} />
         )}
       </main>
     </div>

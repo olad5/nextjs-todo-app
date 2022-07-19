@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styles from "./EntryScreen.module.scss";
 
 type EntryScreenProps = {
-  setModalActive: Dispatch<SetStateAction<boolean>>;
+  setModalActive: (e: React.MouseEvent<HTMLImageElement>) => void;
 };
 
 export default function EntryScreen({ setModalActive }: EntryScreenProps) {
@@ -11,7 +11,7 @@ export default function EntryScreen({ setModalActive }: EntryScreenProps) {
       <div className={styles.centered}>
         <img
           src="plus-sign-black-icon.svg"
-          onClick={() => setModalActive(true)}
+          onClick={(e) => setModalActive(e)}
           alt="Add new todo"
         />
         <h3>Add a new Todo</h3>
