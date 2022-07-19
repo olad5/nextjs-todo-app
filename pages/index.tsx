@@ -67,6 +67,36 @@ export default function Home({
     setAppModalActive(true);
   }
 
+  function toggleCompleted(todoId: number) {
+    console.log("about to run some stuff");
+    if (todos.find((todo) => todo.id === todoId)?.completed === false) {
+      setTodos(
+        todos.map((todo) => {
+          if (todo.id === todoId) {
+            return {
+              ...todo,
+              completed: true,
+            };
+          }
+          return todo;
+        })
+      );
+      return;
+    }
+
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === todoId) {
+          return {
+            ...todo,
+            completed: false,
+          };
+        }
+        return todo;
+      })
+    );
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -115,6 +145,7 @@ export default function Home({
                   todoId={todo.id}
                   setCurrentTodo={setCurrentTodo}
                   currentTodo={currentTodo}
+                  toggleCompleted={toggleCompleted}
                 />
               </div>
             ))}
@@ -133,6 +164,7 @@ export default function Home({
                   todoId={todo.id}
                   setCurrentTodo={setCurrentTodo}
                   currentTodo={currentTodo}
+                  toggleCompleted={toggleCompleted}
                 />
               </div>
             ))}

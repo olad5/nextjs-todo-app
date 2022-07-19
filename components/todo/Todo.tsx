@@ -15,6 +15,7 @@ type TodoProps = {
   ) => void;
   setCurrentTodo: Dispatch<SetStateAction<number>>;
   currentTodo?: number;
+  toggleCompleted: (todoId: number) => void;
 };
 
 export default function Todo({
@@ -24,6 +25,7 @@ export default function Todo({
   handleContextMenuAction,
   todoId,
   setCurrentTodo,
+  toggleCompleted,
   currentTodo,
 }: TodoProps) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,6 +41,11 @@ export default function Todo({
     setMenuOpen(true);
   }
 
+  function handleCompletedIconClick(e: React.MouseEvent<HTMLImageElement>) {
+    console.log("running ooooo");
+    toggleCompleted(todoId);
+  }
+
   return (
     <div
       className={`${styles.todo} 
@@ -50,6 +57,7 @@ export default function Todo({
             className={styles.pendingIcon}
             src="pending-todo-icon.svg"
             alt="pending todo icon"
+            onClick={handleCompletedIconClick}
           />
         ) : (
           <img
@@ -58,7 +66,9 @@ export default function Todo({
             alt="pending todo icon"
           />
         )}
-        <p className={styles.text}>{text}</p>
+        <p className={styles.text} onDoubleClick={handleCompletedIconClick}>
+          {text}
+        </p>
       </div>
       <div onClick={handleMenuIconClick} className={styles.toggleMenuIcon}>
         {!completed && (
