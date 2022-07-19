@@ -15,20 +15,46 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [appModalActive, setAppModalActive] = useState(false);
   const [todos, setTodos] = useState(data);
+  const [todoText, setTodoText] = useState("");
+  const [currentTodo, setCurrentTodo] = useState(0);
 
   const completedTodos = todos.filter((todo) => todo.completed === true);
   const pendingTodos = todos.filter((todo) => todo.completed === false);
 
-  function handleModalSubmit(action: ActionType, text: string) {
-    if (action === ActionType.CREATE) {
-      let newTodo = {
-        id: todos.length + 1,
-        userId: 1,
-        title: text,
-        completed: false,
-      };
-      setTodos(todos.concat(newTodo));
+  function handleCreateTodoModalSubmit(text: string) {
+    let newTodo = {
+      id: todos.length + 1,
+      userId: 1,
+      title: text,
+      completed: false,
+    };
+    setTodos(todos.concat(newTodo));
+    return;
+  }
+
+  function handleUpdateTodoModalSubmit(todoId: number, text: string) {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === todoId) {
+          return {
+            ...todo,
+            title: text,
+          };
+        }
+        return todo;
+      })
+    );
+  }
+  function handleContextMenuAction(action: ActionType, text: string) {
+    if (action === ActionType.UPDATE) {
+      setTodoText(text);
+      setAppModalActive(true);
     }
+  }
+
+  function handleAddTodoClick(e: React.MouseEvent<HTMLButtonElement>) {
+    setTodoText("");
+    setAppModalActive(true);
   }
 
   return (
@@ -42,7 +68,7 @@ export default function Home({
             </p>
           </div>
           <div className={styles.addTodoBtn}>
-            <AppButton onClick={() => setAppModalActive(true)}>
+            <AppButton onClick={(e) => handleAddTodoClick(e)}>
               <div className={styles.btnTextIcon}>
                 <img
                   className={styles.addTodoIcon}
@@ -57,10 +83,12 @@ export default function Home({
         <div className={styles.appModal}>
           {appModalActive && (
             <AppModal
-              update={false}
+              update={todoText.length > 0}
               setIsOpen={setAppModalActive}
-              handleModalSubmit={handleModalSubmit}
-              text="hello"
+              handleCreateTodoModalSubmit={handleCreateTodoModalSubmit}
+              handleUpdateTodoModalSubmit={handleUpdateTodoModalSubmit}
+              text={todoText}
+              todoId={currentTodo}
             />
           )}
         </div>
@@ -70,7 +98,14 @@ export default function Home({
           <div className={styles.pendingTodos}>
             {pendingTodos.map((todo) => (
               <div key={todo.id}>
-                <Todo text={todo.title} completed={todo.completed} />
+                <Todo
+                  text={todo.title}
+                  completed={todo.completed}
+                  handleContextMenuAction={handleContextMenuAction}
+                  todoId={todo.id}
+                  setCurrentTodo={setCurrentTodo}
+                  currentTodo={currentTodo}
+                />
               </div>
             ))}
           </div>
@@ -81,7 +116,14 @@ export default function Home({
           <div className={styles.pendingTodos}>
             {completedTodos.map((todo) => (
               <div key={todo.id}>
-                <Todo text={todo.title} completed={todo.completed} />
+                <Todo
+                  text={todo.title}
+                  completed={todo.completed}
+                  handleContextMenuAction={handleContextMenuAction}
+                  todoId={todo.id}
+                  setCurrentTodo={setCurrentTodo}
+                  currentTodo={currentTodo}
+                />
               </div>
             ))}
           </div>
@@ -91,12 +133,14 @@ export default function Home({
   );
 }
 
-type APIResponse = {
+export type Todo = {
   userId: number;
   id: number;
   title: string;
   completed: boolean;
-}[];
+};
+
+export type APIResponse = Todo[];
 
 type PageProps = {
   data: APIResponse;
